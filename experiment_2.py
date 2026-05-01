@@ -9,6 +9,7 @@ Requirements: pip install groq
 """
 
 import re
+import csv
 from groq import Groq
 
 # API_KEY = "groq__api__key"
@@ -133,6 +134,15 @@ def analyze_prompt(prompt: str):
     print(suggestion)
     print()
 
+def save_results(rows):
+    with open("misconception_results.csv", "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=["prompt", "detected_issues", "suggestion"]
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+
 
 if __name__ == "__main__":
 
@@ -147,6 +157,19 @@ if __name__ == "__main__":
         "Summarize the main ideas of machine learning in simple terms.",
     ]
 
+    rows = []
+
     for prompt in test_prompts:
+        flags = detect_misconceptions(prompt)
+        suggestion = get_groq_suggestion(prompt, flags)
+
         analyze_prompt(prompt)
-        print()
+
+        rows.append({
+            "prompt": prompt,
+            "detected_issues": "; ".join([f["name"] for f in flags]) if flags else "None",
+            "suggestion": suggestion,
+        })
+
+    save_results(rows)
+    print("Saved results to misconception_results.csv")

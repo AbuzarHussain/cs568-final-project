@@ -11,10 +11,11 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
 import time
+import csv
 
 API_KEY = "groq_api_key"
 MODEL   = "llama-3.1-8b-instant"
-N_RUNS  = 3                          
+N_RUNS  = 5                          
 TEMP    = 0.7                        
 
 client = Groq(api_key=API_KEY)
@@ -182,6 +183,12 @@ def run_experiment():
         outputs_with = run_prompt(pair["with"])
         score_with   = measure_consistency(outputs_with)
 
+        print("\nExample WITHOUT:")
+        print(outputs_without[0])
+
+        print("\nExample WITH:")
+        print(outputs_with[0])
+
         results.append({
             "task":          pair["task"],
             "score_without": score_without,
@@ -206,7 +213,13 @@ def print_results(results: list[dict]):
     print(f"{'AVERAGE':<20} {avg_without:>10.4f} {avg_with:>10.4f} {avg_improvement:>+12.4f}")
     print(f"\nConclusion: Format instructions {'IMPROVED' if avg_improvement > 0 else 'DID NOT IMPROVE'} consistency by {abs(avg_improvement):.4f} on average.")
 
+def save_results(results):
+    with open("results.csv", "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=["task", "score_without", "score_with", "improvement"])
+        writer.writeheader()
+        writer.writerows(results)
 
 if __name__ == "__main__":
     results = run_experiment()
     print_results(results)
+    save_results(results)
