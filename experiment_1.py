@@ -13,7 +13,7 @@ import numpy as np
 import time
 import csv
 
-API_KEY = "groq_api_key"
+API_KEY = "API_KEY"
 MODEL   = "llama-3.1-8b-instant"
 N_RUNS  = 5                          
 TEMP    = 0.7                        

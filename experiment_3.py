@@ -28,7 +28,8 @@ import csv
 
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
-MODEL   = "llama-3.1-8b-instant"
+MODEL        = "llama-3.1-8b-instant"
+JUDGE_MODEL  = "llama-3.3-70b-versatile"   # stronger model for evaluation
 N_RUNS  = 3
 TEMP    = 0.7
 
@@ -143,28 +144,46 @@ def run_prompt(prompt: str, n: int = N_RUNS) -> list[str]:
 
 
 def evaluate_quality(prompt: str, output: str) -> int:
-    """LLM-as-judge: rates a single output 1-10 on relevance, completeness, and structure."""
+    """LLM-as-judge: chain-of-thought format-compliance scoring, 1-10."""
     judge_prompt = (
-        f"You are evaluating the quality of an AI assistant's response.\n\n"
-        f"Original prompt: \"{prompt}\"\n\n"
-        f"Response to evaluate:\n{output}\n\n"
-        f"Rate this response from 1 to 10 based on:\n"
-        f"- Relevance: does it directly address the prompt?\n"
-        f"- Completeness: is it thorough enough to be genuinely useful?\n"
-        f"- Structure: is it organized and easy to read?\n\n"
-        f"Reply with ONLY a single integer from 1 to 10. No explanation."
+        f"You are a strict research evaluator scoring AI responses on a 1-10 scale. "
+        f"Your scores must reflect real differences — do not cluster around one number.\n\n"
+        f"Prompt given to the AI:\n\"{prompt}\"\n\n"
+        f"AI response:\n{output}\n\n"
+        f"Step 1 — List every explicit constraint in the prompt (exact item counts, "
+        f"required format templates, specified audience, length requirements, etc.). "
+        f"If there are none, write 'No constraints'.\n\n"
+        f"Step 2 — For each constraint, state whether the response MET or VIOLATED it "
+        f"and why.\n\n"
+        f"Step 3 — Assign a final score using this scale:\n"
+        f"  1-2: Off-topic or completely ignores the prompt\n"
+        f"  3-4: On-topic but ignores most format/structure constraints\n"
+        f"  5-6: Decent content, misses several constraints (wrong count, no template, etc.)\n"
+        f"  7-8: Meets most constraints with only minor deviations\n"
+        f"  9-10: Meets every constraint exactly; highly specific and complete\n\n"
+        f"Important: a vague prompt that got a vague (but valid) response is a 5, not a 9. "
+        f"Only give 9-10 when every stated constraint is satisfied.\n\n"
+        f"End your response with exactly this line:\nFINAL SCORE: <integer>"
     )
     response = client.chat.completions.create(
-        model=MODEL,
+        model=JUDGE_MODEL,
         temperature=0.0,
         messages=[{"role": "user", "content": judge_prompt}],
     )
     raw = response.choices[0].message.content.strip()
     time.sleep(2)
-    for char in raw:
+
+    # Parse "FINAL SCORE: N" from the chain-of-thought response
+    for line in reversed(raw.splitlines()):
+        if "FINAL SCORE" in line.upper():
+            for token in line.split():
+                if token.isdigit():
+                    return min(max(int(token), 1), 10)
+    # Fallback: grab any digit from the last line
+    for char in raw[-30:]:
         if char.isdigit():
             return min(max(int(char), 1), 10)
-    return 5  # fallback if parsing fails
+    return 5
 
 
 def score_all_runs(prompt: str, outputs: list[str]) -> tuple[float, float]:

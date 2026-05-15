@@ -1,0 +1,16 @@
+task,score_without,score_with,improvement
+Recipe Steps,0.8787,0.8167,-0.062
+Study Plan,0.7582,0.5644,-0.1938
+Exercise Routine,0.7755,0.4944,-0.2811
+Coding Steps,0.809,0.8022,-0.0068
+Travel Packing,0.7783,0.3165,-0.4618
+Compare Python vs JavaScript,0.6809,0.3925,-0.2884
+Compare Remote vs Office Work,0.8293,0.7213,-0.108
+Compare iOS vs Android,0.7534,0.4769,-0.2765
+Summarize Climate Change,0.797,0.7798,-0.0172
+Summarize AI risks,0.7808,0.5368,-0.244
+Summarize a Historical Event,0.8615,0.5675,-0.294
+Explain Blockchain,0.8082,0.753,-0.0552
+Explain Supply and Demand,0.7775,0.7279,-0.0496
+Book Recommendations,0.8188,0.6017,-0.2171
+Productivity Tips,0.823,0.4817,-0.3413

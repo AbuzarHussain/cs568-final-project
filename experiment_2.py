@@ -5,14 +5,23 @@ Extends: "Why Johnny Can't Prompt"
 Detects common misconceptions in user prompts using rule-based pattern
 matching and then uses Groq to generate improved prompts.
 
-Requirements: pip install groq
+After the main run, an optional LLM-as-judge step (mirroring Experiment 3)
+rates each improvement suggestion on a 1-10 scale and saves the scores to
+exp2_evaluation_results.csv.
+
+Requirements: pip install groq numpy python-dotenv
 """
 
 import re
 import csv
+import time
+import numpy as np
 from groq import Groq
+from dotenv import load_dotenv
+import os
 
-# API_KEY = "groq__api__key"
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
 MODEL   = "llama-3.1-8b-instant"
 
 client = Groq(api_key=API_KEY)
@@ -144,6 +153,69 @@ def save_results(rows):
         writer.writerows(rows)
 
 
+# ── Exp3-style LLM-as-judge evaluation ──────────────────────────────────────
+
+def evaluate_suggestion(prompt: str, detected_issues: str, suggestion: str) -> int:
+    """Rate an exp2 suggestion 1-10 using an LLM-as-judge (mirrors exp3's judge)."""
+    judge_prompt = (
+        "You are evaluating the quality of an AI prompt improvement suggestion.\n\n"
+        f"Original prompt: \"{prompt}\"\n\n"
+        f"Detected issues: {detected_issues}\n\n"
+        f"Improvement suggestion:\n{suggestion}\n\n"
+        "Rate this suggestion from 1 to 10 based on:\n"
+        "- Correctness: does it accurately identify and explain the issues?\n"
+        "- Actionability: does the rewritten prompt actually fix the problems?\n"
+        "- Clarity: is the advice easy for a non-technical user to understand?\n\n"
+        "Reply with ONLY a single integer from 1 to 10. No explanation."
+    )
+    response = client.chat.completions.create(
+        model=MODEL,
+        temperature=0.0,
+        messages=[{"role": "user", "content": judge_prompt}],
+    )
+    raw = response.choices[0].message.content.strip()
+    time.sleep(2)
+    for char in raw:
+        if char.isdigit():
+            return min(max(int(char), 1), 10)
+    return 5
+
+
+def run_evaluation(rows: list[dict]):
+    """Score every exp2 suggestion with the LLM-as-judge and save results."""
+    print("\n" + "=" * 60)
+    print("EXP3-STYLE EVALUATION OF EXP2 SUGGESTIONS")
+    print("=" * 60)
+
+    eval_rows = []
+    scores = []
+
+    for row in rows:
+        score = evaluate_suggestion(
+            row["prompt"], row["detected_issues"], row["suggestion"]
+        )
+        scores.append(score)
+        eval_rows.append({
+            "prompt":          row["prompt"],
+            "detected_issues": row["detected_issues"],
+            "suggestion":      row["suggestion"],
+            "judge_score":     score,
+        })
+        print(f"  [{score:>2}/10] {row['prompt'][:70]}")
+
+    avg = round(float(np.mean(scores)), 4)
+    print(f"\nAverage judge score across all suggestions: {avg:.2f}/10")
+
+    with open("exp2_evaluation_results.csv", "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=["prompt", "detected_issues", "suggestion", "judge_score"],
+        )
+        writer.writeheader()
+        writer.writerows(eval_rows)
+    print("Saved evaluation results to exp2_evaluation_results.csv")
+
+
 if __name__ == "__main__":
 
     test_prompts = [
@@ -173,3 +245,5 @@ if __name__ == "__main__":
 
     save_results(rows)
     print("Saved results to misconception_results.csv")
+
+    run_evaluation(rows)
