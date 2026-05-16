@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "PowerShell(Get-ChildItem -Path \"c:\\\\Users\\\\anyag2\\\\cs568-final-project\" | Where-Object { -not $_.PSIsContainer -or $_.Name -notin @\\('venv', '.git'\\) } | Sort-Object Name)"
-    ]
-  }
-}

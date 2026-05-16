@@ -1,50 +1,70 @@
-prompt,detected_issues,suggestion,judge_score
-Search the web for the latest iPhone price and send me the link.,Asking to browse the web,"The problem with your prompt is that it asks the AI model to browse the internet, which it can't do. It can only look at the information it was trained on, which is static and not up-to-date.
+prompt,detected_issues,improved_prompt,suggestion,original_score,improved_score,improvement
+Search the web for the latest iPhone price and send me the link.,Asking to browse the web,"This way, the AI model can give you the information it has, and you can look up more recent prices online if you need to.","The issue with your prompt is that it asks the AI model to browse the web, which it can't do. AI models are only trained on data they've seen before, so they can't search the internet or access live websites.
 
-Here's a rewritten prompt that should work better: ""What are the current prices of the latest iPhone models? Provide information from reputable sources.""
+Instead, you can ask the AI model to look in its training data for the latest information on iPhone prices. Here's a rewritten prompt that should work:
 
-This new prompt asks the AI model to find information about iPhone prices from its training data, which should be more accurate and up-to-date than searching the web.",9
-Remember last time I asked you about my project? Continue from there.,Asking to remember previous conversations,"The issue with your prompt is that it's asking the AI model to remember a previous conversation, which isn't possible since each time you interact with it, the conversation starts from scratch. The model doesn't have the ability to recall or access any information from previous chats.
+""Provide me with the latest information on iPhone prices that you have in your training data.""
 
-Let's rewrite the prompt to get the AI model to continue from where you left off in a single conversation. You can ask it to recall what you said earlier in the same conversation, like this: ""Can you summarize what I said earlier about my project?"" This way, the model can refer to your previous statements within the same conversation.",9
-What's the weather like right now in Chicago?,Asking for real-time information,"The issue with asking for real-time information is that language models like me are trained on data up to a certain point in time, and we don't have the ability to browse the internet or access current events. This means we can't provide you with the most up-to-date information, like today's weather.
+This way, the AI model can give you the information it has, and you can look up more recent prices online if you need to.",5,9,4
+Remember last time I asked you about my project? Continue from there.,Asking to remember previous conversations,"This way, the AI will focus on the current conversation and try to recall the last thing we talked about, rather than trying to remember a past conversation that it can't actually recall.","The issue with asking the AI to ""remember"" previous conversations is that it's based on the assumption that the AI has some kind of memory that can recall past interactions. However, this isn't how AI models work. Each time you interact with the AI, it starts from a blank slate with no knowledge of what happened before.
 
-Here's a rewritten prompt that should give you a better result: ""What was the typical weather like in Chicago during the month of May?"" This way, I can provide you with general information about the weather in Chicago during May, based on historical data.",8
-Run this Python script for me and tell me the output.,None,"Prompt quality: 6/10
+To fix this, we can ask the AI to pick up where we left off in the current conversation, rather than relying on it to recall past conversations. Here's a rewritten prompt:
 
-While the prompt is straightforward, it lacks context and clarity. Here are two suggestions to improve it:
+""Let's get back to my project. What was the last thing we discussed about it?""
 
-1. **Provide the Python script**: Include the actual script you'd like the AI to run, so the model knows exactly what to execute. This will help the AI provide a more accurate output.
-2. **Specify the desired output format**: Mention how you'd like the output to be presented, e.g., ""in plain text,"" ""as a code snippet,"" or ""with explanations."" This will help the AI tailor its response to your needs.
+This way, the AI will focus on the current conversation and try to recall the last thing we talked about, rather than trying to remember a past conversation that it can't actually recall.",5,5,0
+What's the weather like right now in Chicago?,Asking for real-time information,"This way, the AI model can provide you with general information about the weather in Chicago during a specific time of year, without relying on real-time data.","The issue with your prompt is that you're asking for real-time information. AI models like LLMs can only provide information up to a certain point in time, usually based on their training data, which is typically a few years old.
 
-Example of an improved prompt: ""Here's a Python script: `print('Hello, World!')`. Please run it and tell me the output in plain text.""",9
-Tell me about dogs.,Too vague / too short; No clear task specified,"The main issues with your prompt are that it's too short and doesn't give the AI model a clear direction. When a prompt is too short, the AI might not know what to focus on or how to provide a helpful answer. Also, not specifying a clear task makes it hard for the AI to know what kind of information you're looking for.
+To get around this, you can ask for historical or general information about the weather in Chicago. Here's a rewritten prompt:
 
-Here's a rewritten prompt that addresses these issues:
+""What's the typical weather like in Chicago during the spring season?""
 
-""Provide a detailed overview of the characteristics, behavior, and history of dogs, including their evolution, different breeds, and popular roles as pets and working animals.""
+This way, the AI model can provide you with general information about the weather in Chicago during a specific time of year, without relying on real-time data.",6,8,2
+Run this Python script for me and tell me the output.,None,Here's a Python script: ... (insert script here) ... Can you run it and tell me the output?,"I would rate this prompt a 6 out of 10. The prompt is clear and concise, but it lacks essential details that would help the AI model provide a more accurate and helpful response.
 
-This revised prompt gives the AI a clear task (providing a detailed overview) and provides more context about what you're interested in learning.",9
-Explain the causes of the French Revolution.,None,"I'd rate this prompt an 8 out of 10. It's clear and concise, making it a great starting point for an AI model.
+To make this prompt even better, I would suggest the following improvements:
 
-To make it even better, I'd suggest two improvements:
+1. Provide the actual Python script: Instead of asking the AI model to ""run"" the script, provide the script itself. This will allow the model to analyze the code, identify any potential errors, and provide a more accurate output. For example, you could say: ""Here's a Python script: ... (insert script here) ... Can you run it and tell me the output?""
+2. Specify the input data: If the script requires input data, such as user input or a specific dataset, provide that as well. This will help the model understand the context and provide a more accurate output. For example, you could say: ""Here's a Python script: ... (insert script here) ... Can you run it with the input data [insert input data here] and tell me the output?""
 
-1. **Specify the level of detail**: Adding a phrase like ""briefly explain"" or ""provide a historical overview"" can help the AI model understand the desired level of detail in the response.
-2. **Consider a more nuanced question**: Instead of asking a straightforward question, you could ask something like ""What were the key social, economic, and political factors that contributed to the French Revolution?"" This can encourage the AI model to provide a more comprehensive and nuanced response.
+By providing more context and details, you can help the AI model provide a more accurate and helpful response.
 
-Here's an example of an improved prompt: ""Briefly explain the key social, economic, and political factors that contributed to the French Revolution.""",9
-Give me tips for improving my writing skills.,None,"I'd rate this prompt an 8 out of 10. It's clear and concise, and the AI model should be able to provide helpful tips.
+IMPROVED PROMPT: ""Here's a Python script: ... (insert script here) ... Can you run it and tell me the output?""",5,5,0
+Tell me about dogs.,Too vague / too short; No clear task specified,"Provide a detailed overview of the different dog breeds, including their characteristics, temperaments, and origins.","The problem with the prompt ""Tell me about dogs"" is that it's too short and doesn't give the AI model a clear direction. Imagine asking a friend to tell you about a topic without specifying what you want to know - they might not know where to start or what to focus on.
 
-To make it even better, I'd suggest two improvements:
+Another issue is that the prompt doesn't specify what kind of information you're looking for. Do you want to know about dog breeds, their behavior, or something else? This lack of clarity can lead to unpredictable and inconsistent responses from the AI model.
 
-1. **Be more specific**: Consider adding a specific area of writing you'd like to improve, such as ""fiction writing"" or ""business writing."" This will help the AI model provide more targeted tips.
-2. **Specify the type of tips**: You could also ask for tips in a specific format, such as ""provide 5 actionable tips"" or ""give me tips on how to overcome writer's block."" This will help the AI model understand how to structure its response.
+To fix these issues, let's rephrase the prompt to make it more specific and clear. Here's a revised version:
 
-Example improved prompt: ""Provide 5 actionable tips for improving my creative writing skills.""",9
-Summarize the main ideas of machine learning in simple terms.,None,"I'd rate this prompt a solid 8 out of 10. It's clear, concise, and easy to understand. However, here are two suggestions to make it even better:
+""Provide a detailed overview of the different dog breeds, including their characteristics, temperaments, and origins.""
 
-1. **Add a specific tone or perspective**: You could specify whether you want the summary to be more technical, accessible, or entertaining. For example, ""Explain machine learning in simple terms in a way that's easy for a non-technical audience to understand.""
+This revised prompt gives the AI model a clear task (providing an overview of dog breeds) and specifies the kind of information you're looking for (characteristics, temperaments, and origins). This should help the model give you a more useful and consistent response.
 
-2. **Provide any specific context or focus**: Consider adding a specific aspect of machine learning you're interested in (e.g., supervised vs. unsupervised learning, neural networks, applications in healthcare). For example, ""Summarize the main ideas of supervised machine learning in simple terms.""
+IMPROVED PROMPT: Provide a detailed overview of the different dog breeds, including their characteristics, temperaments, and origins.",8,9,1
+Explain the causes of the French Revolution.,None,"Explain the social, economic, and political causes of the French Revolution in a way that a high school student could understand.","I would rate this prompt an 8 out of 10. It's clear and concise, and it directly asks for the explanation of a specific historical event.
 
-These tweaks will help the AI model provide a more tailored and relevant response.",9
+To make it even better, here are two suggestions:
+
+1. Provide more context: While the prompt is clear, it's a broad topic. Adding some context or specifying the scope of the explanation could help the AI model provide a more focused and relevant response. For example, ""Explain the social, economic, and political causes of the French Revolution.""
+
+2. Specify the desired level of detail: The prompt is open-ended, and the AI model might provide a very general or a very detailed explanation. Adding a hint about the desired level of detail could help the model provide a response that's tailored to the user's needs. For example, ""Explain the causes of the French Revolution in a way that a high school student could understand.""
+
+IMPROVED PROMPT: Explain the social, economic, and political causes of the French Revolution in a way that a high school student could understand.",9,9,0
+Give me tips for improving my writing skills.,None,Give me tips for improving my creative writing skills to write a compelling novel.,"I would rate this prompt a 6 out of 10 in terms of clarity and specificity. While it's a good starting point, it could be improved to get more accurate and relevant responses from the AI model.
+
+To make the prompt more effective, here are two specific suggestions:
+
+1. **Specify the type of writing**: Adding the type of writing the user is interested in improving (e.g., creative writing, technical writing, academic writing, etc.) can help the AI model provide more targeted advice. For example: ""Give me tips for improving my creative writing skills.""
+2. **Provide more context or goals**: Adding more context or goals can help the AI model understand what the user is looking for in terms of improvement. For example: ""Give me tips for improving my creative writing skills to write a compelling novel"" or ""Give me tips for improving my technical writing skills to communicate complex ideas to non-technical audiences.""
+
+IMPROVED PROMPT: Give me tips for improving my creative writing skills to write a compelling novel.",8,5,-3
+Summarize the main ideas of machine learning in simple terms.,None,"""Summarize the main ideas of machine learning in simple terms, including its key concepts and applications, for a non-technical audience.""","I would rate this prompt an 8 out of 10. The prompt is clear and concise, and it effectively communicates the user's intent.
+
+To make it even better, here are two suggestions:
+
+1. **Specify the level of simplicity**: While ""simple terms"" is a good starting point, it's not entirely clear what level of simplicity is desired. For example, the user might want an explanation that's suitable for a 5-year-old, a high school student, or a non-technical adult. Adding a specific phrase, such as ""for a non-technical audience"" or ""in a way that a beginner can understand,"" would help the AI model tailor its response accordingly.
+
+2. **Provide context or clarify the scope**: The prompt only asks for a summary of machine learning, but it's not clear what specific aspects of machine learning the user wants to focus on. For example, they might be interested in supervised learning, neural networks, or applications of machine learning in different domains. Adding a phrase, such as ""including its key concepts and applications,"" would help the AI model provide a more comprehensive and relevant response.
+
+IMPROVED PROMPT:
+""Summarize the main ideas of machine learning in simple terms, including its key concepts and applications, for a non-technical audience.""",9,9,0
